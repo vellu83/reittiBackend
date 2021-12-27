@@ -174,7 +174,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/ReittiBackend/dev/1640196118034-2021-12-22T18:01:58.034Z/ReittiBackend.zip"
+                "S3Key": "serverless/ReittiBackend/dev/1640591743854-2021-12-27T07:55:43.854Z/ReittiBackend.zip"
               },
               "Handler": "app.handler",
               "Runtime": "nodejs12.x",
@@ -192,14 +192,14 @@
               "AppLogGroup"
             ]
           },
-          "AppLambdaVersionGmLhLr7Q43mEoH5mFIER28jd1HQgRTO7iaZuX2Rppk": {
+          "AppLambdaVersion3k3DmlK3zHiwDwiFr0Lx6DDT5Ze97230m3MmexgU3kM": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "AppLambdaFunction"
               },
-              "CodeSha256": "CsTftl7bz9NLMuS8G/gjxhVMIdoiNq5eIYmiqCQSt7E="
+              "CodeSha256": "k1pXemONXwirhWOgcQNTx93A2kEy5NHYNaa5KJ87+pM="
             }
           },
           "ApiGatewayRestApi": {
@@ -417,7 +417,7 @@
               "AppLambdaPermissionApiGateway"
             ]
           },
-          "ApiGatewayDeployment1640196113150": {
+          "ApiGatewayDeployment1640591736092": {
             "Type": "AWS::ApiGateway::Deployment",
             "Properties": {
               "RestApiId": {
@@ -482,7 +482,7 @@
           "AppLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "AppLambdaVersionGmLhLr7Q43mEoH5mFIER28jd1HQgRTO7iaZuX2Rppk"
+              "Ref": "AppLambdaVersion3k3DmlK3zHiwDwiFr0Lx6DDT5Ze97230m3MmexgU3kM"
             },
             "Export": {
               "Name": "sls-ReittiBackend-dev-AppLambdaFunctionQualifiedArn"
@@ -658,7 +658,7 @@
         "timeout": 6,
         "runtime": "nodejs12.x",
         "vpc": {},
-        "versionLogicalId": "AppLambdaVersionGmLhLr7Q43mEoH5mFIER28jd1HQgRTO7iaZuX2Rppk"
+        "versionLogicalId": "AppLambdaVersion3k3DmlK3zHiwDwiFr0Lx6DDT5Ze97230m3MmexgU3kM"
       }
     },
     "configValidationMode": "warn",
@@ -679,7 +679,7 @@
     "artifact": "/home/vellu/git/reittiBackend/.serverless/ReittiBackend.zip"
   },
   "package": {
-    "artifactDirectoryName": "serverless/ReittiBackend/dev/1640196118034-2021-12-22T18:01:58.034Z",
+    "artifactDirectoryName": "serverless/ReittiBackend/dev/1640591743854-2021-12-27T07:55:43.854Z",
     "artifact": "ReittiBackend.zip"
   }
 }

@@ -32,10 +32,11 @@ app.use(express.urlencoded({ extended: true }));
 //app.use(cors())
 app.use(express.json())
 
+app.get('/health', (req, res) => {
+    res.status(200).json({ health: 'ok' })
+})
 
-app.get('/'), (req, res) => {
-    res.send('terve')
-}
+
 
 app.get('/gpdr', (req, res) => {
     res.sendFile('./gpdrPage.html', { root: __dirname })

@@ -3,36 +3,53 @@ require('express-async-errors')
 const usersRouter = require('express').Router()
 const User = require('../models/user')
 
-usersRouter.get('/', async(request, response) => {
-    const users = await User.find({})
-    response.json(users.map(u => u.toJSON()))
-})
+
 
 
 usersRouter.get('/me', async(request, response) => {
+    try {
+        const user = await User.findById(request.user)
+        response.json(request.user)
+    } catch (error) {
+        console.log(error)
+    }
 
-    const user = await User.findById(request.user)
-    response.json(request.user)
 })
 
 usersRouter.patch('/me', async(request, response) => {
+    try {
+        const user = await User.findById(request.user)
+        if (!user) {
+            response.status(401).json({ error: 'user not found in DB' })
+        }
 
-    const user = await User.findById(request.user)
-    if (!user) {
-        response.status(401).json({ error: 'user not found in DB' })
+        const userId = user.id.toString()
+            //console.log(JSON.parse(request.body))
+
+        if (request.user) {
+            const res = await User.findByIdAndUpdate(request.user, request.body, { new: true })
+            response.status(200).json(res)
+        } else {
+            response.status(401).json({ error: 'invalid user' })
+        }
+
+    } catch (error) {
+        console.log(error)
     }
 
-    const userId = user.id.toString()
-        //console.log(JSON.parse(request.body))
-
-    if (request.user) {
-        const res = await User.findByIdAndUpdate(request.user, request.body, { new: true })
-        response.status(200).json(res)
-    } else {
-        response.status(401).json({ error: 'invalid user' })
-    }
 
     //response.json(request.user)
+})
+
+usersRouter.get('/', async(request, response) => {
+    try {
+        const users = await User.find({})
+        response.json(users.map(u => u.toJSON()))
+    } catch (error) {
+        console.log(error)
+
+    }
+
 })
 
 
@@ -49,7 +66,12 @@ usersRouter.post('/', async(request, response) => {
     const user = new User({
         username: body.username,
         name: body.name,
+        email: body.email,
         passwordHash: passwordHash,
+        settings: body.settings,
+        points: body.points,
+        routes: body.routes,
+        friends: body.friends
     })
 
     const savedUser = await user.save()

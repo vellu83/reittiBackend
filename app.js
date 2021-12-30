@@ -47,8 +47,6 @@ app.get('/gpdr', (req, res) => {
 app.use(middleware.requestLogger)
 app.use(middleware.tokenExtractor)
 
-
-app.use('/api/users/me', middleware.userExtractor, usersRouter)
 app.use('/api/users', usersRouter)
 
 app.use('/api/login', loginRouter)

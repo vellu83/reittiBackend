@@ -26,15 +26,19 @@ const unknownEndpoint = (request, response) => {
 
 const tokenExtractor = (request, response, next) => {
 
+
     if (request.get('authorization')) {
 
         const authorization = request.get('authorization')
-        if (!(authorization.toLowerCase().startsWith('bearer '))) {
+
+        if (!(authorization.toLowerCase().startsWith('bearer'))) {
 
             return response.status(401).json({ error: 'invalid token' })
+
         }
         request.token = authorization.substring(7)
     }
+
 
     next()
 
@@ -43,20 +47,27 @@ const tokenExtractor = (request, response, next) => {
 
 const userExtractor = async(request, response, next) => {
 
+
     if (request.token) {
         const token = request.token
 
-        if (token === null) {
+
+        if (!token) {
+
             return response.status(401).json({ error: 'missing token' })
         }
 
-        const decodedT = jwt.verify(token, process.env.SECRET)
+        let decodedT = null
+        decodedT = jwt.verify(token, process.env.SECRET)
 
-        if (!token || !decodedT.id) {
+        if (!token || !decodedT.id || !decodedT) {
+
             return response.status(401).json({ error: 'invalid token' })
         }
 
+
         request.user = decodedT.id.toString()
+
 
     }
     next()

@@ -2,21 +2,22 @@ const bcrypt = require('bcrypt')
 require('express-async-errors')
 const usersRouter = require('express').Router()
 const User = require('../models/user')
+const middleware = require('../utils/middleware')
 
 
 
 
-usersRouter.get('/me', async(request, response) => {
+usersRouter.get('/me', middleware.userExtractor, async(request, response) => {
     try {
         const user = await User.findById(request.user)
-        response.json(request.user)
+        response.json(user)
     } catch (error) {
         console.log(error)
     }
 
 })
 
-usersRouter.patch('/me', async(request, response) => {
+usersRouter.patch('/me', middleware.userExtractor, async(request, response) => {
     try {
         const user = await User.findById(request.user)
         if (!user) {
@@ -71,7 +72,7 @@ usersRouter.post('/', async(request, response) => {
         settings: body.settings,
         points: body.points,
         routes: body.routes,
-        friends: body.friends
+        friends: body.friend
     })
 
     const savedUser = await user.save()

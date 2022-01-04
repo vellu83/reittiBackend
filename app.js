@@ -10,6 +10,7 @@ const middleware = require('./utils/middleware')
 const logger = require('./utils/logger')
 const mongoose = require('mongoose')
 const path = require('path')
+const mapstyle = require('./stylejson/backgroundmap.json')
 
 logger.info('connecting to', process.env.MONGODB_URI)
 
@@ -29,7 +30,14 @@ mongoose.connect(process.env.MONGODB_URI, {
 
 
 const app = express()
-app.use(express.static('images'))
+const options = {
+    isBase64Encoded: true,
+    setHeaders: function(res, path, stat) {
+        res.set('Content-Type', 'image/png')
+    }
+}
+
+app.use(express.static('images', options))
 app.use(express.urlencoded({ extended: true }));
 
 //app.use(cors())
@@ -37,6 +45,10 @@ app.use(express.json())
 
 app.get('/health', (req, res) => {
     res.status(200).json({ health: 'ok' })
+})
+
+app.get('/api/mapstyle', (req, res) => {
+    res.status(200).json(mapstyle)
 })
 
 

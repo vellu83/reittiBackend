@@ -161,7 +161,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/ReittiBackend/dev/1640859073549-2021-12-30T10:11:13.549Z/ReittiBackend.zip"
+          "S3Key": "serverless/ReittiBackend/dev/1641287904134-2022-01-04T09:18:24.134Z/ReittiBackend.zip"
         },
         "Handler": "app.handler",
         "Runtime": "nodejs12.x",
@@ -179,14 +179,14 @@
         "AppLogGroup"
       ]
     },
-    "AppLambdaVersionzMEEDqh2kFjO4sDgCcvxE5BSzVGaAW3KSMiuTb4DsQ": {
+    "AppLambdaVersionDahAefVCCuUJHUxxDRYqe8RW58dDf0XIymJ6zgRw": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "AppLambdaFunction"
         },
-        "CodeSha256": "nHMOWPnvUiOnxjghF2sDaWjt+g0CE7Kztw4+tVnhsI0="
+        "CodeSha256": "GJLLy4291jpEDeoR/vkbUhoTlWFti2bI+mQjwV+0ofA="
       }
     },
     "ApiGatewayRestApi": {
@@ -404,7 +404,7 @@
         "AppLambdaPermissionApiGateway"
       ]
     },
-    "ApiGatewayDeployment1640859067944": {
+    "ApiGatewayDeployment1641287896592": {
       "Type": "AWS::ApiGateway::Deployment",
       "Properties": {
         "RestApiId": {
@@ -469,7 +469,7 @@
     "AppLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "AppLambdaVersionzMEEDqh2kFjO4sDgCcvxE5BSzVGaAW3KSMiuTb4DsQ"
+        "Ref": "AppLambdaVersionDahAefVCCuUJHUxxDRYqe8RW58dDf0XIymJ6zgRw"
       },
       "Export": {
         "Name": "sls-ReittiBackend-dev-AppLambdaFunctionQualifiedArn"

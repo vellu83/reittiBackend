@@ -17,6 +17,30 @@ usersRouter.get('/me', middleware.userExtractor, async(request, response) => {
 
 })
 
+usersRouter.post('/me/points', middleware.userExtractor, async(request, response) => {
+    try {
+        const user = await User.findById(request.user)
+        if (!user) {
+            response.status(401).json({ error: 'user not found in DB' })
+        }
+
+        const userId = user.id.toString()
+            //console.log(JSON.parse(request.body))
+
+        if (request.user) {
+            const res = await User.findByIdAndUpdate(request.user, { $push: { points: request.body } }, { new: true })
+            response.status(200).json(res)
+        } else {
+            response.status(401).json({ error: 'invalid user' })
+        }
+
+    } catch (error) {
+        console.log(error)
+    }
+
+
+})
+
 usersRouter.patch('/me', middleware.userExtractor, async(request, response) => {
     try {
         const user = await User.findById(request.user)

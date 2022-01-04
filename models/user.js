@@ -7,9 +7,9 @@ const userSchema = mongoose.Schema({
     email: { type: String, unique: true, required: true },
     passwordHash: String,
     settings: {},
-    points: {},
-    routes: {},
-    friends: {},
+    points: [],
+    routes: [],
+    friends: [],
 
 })
 

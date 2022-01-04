@@ -11,6 +11,7 @@ const logger = require('./utils/logger')
 const mongoose = require('mongoose')
 const path = require('path')
 const mapstyle = require('./stylejson/backgroundmap.json')
+const custommap = require('./stylejson/maastokarttaCustom.json')
 
 logger.info('connecting to', process.env.MONGODB_URI)
 
@@ -48,7 +49,7 @@ app.get('/health', (req, res) => {
 })
 
 app.get('/api/mapstyle', (req, res) => {
-    res.status(200).json(mapstyle)
+    res.status(200).json(custommap)
 })
 
 

@@ -1,4 +1,6 @@
 const mongoose = require('mongoose')
+const Schema = mongoose.Schema
+const featureSchema = require('./feature')
 const uniqueValidator = require('mongoose-unique-validator')
 
 const userSchema = mongoose.Schema({
@@ -7,7 +9,15 @@ const userSchema = mongoose.Schema({
     email: { type: String, unique: true, required: true },
     passwordHash: String,
     settings: {},
-    points: [],
+    points: [
+        new Schema({
+            geometry: {},
+            type: { type: String },
+            properties: {
+                name: { type: String, required: true }
+            }
+        })
+    ],
     routes: [],
     friends: [],
 

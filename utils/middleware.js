@@ -83,6 +83,7 @@ const errorHandler = (error, request, response, next) => {
         return response.status(401).json({ error: 'invalid access token' })
     }
 
+
     logger.error(error.message)
 
     next(error)

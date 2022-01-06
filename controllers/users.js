@@ -1,8 +1,10 @@
 const bcrypt = require('bcrypt')
+const mongoose = require('mongoose')
 require('express-async-errors')
 const usersRouter = require('express').Router()
 const User = require('../models/user')
 const middleware = require('../utils/middleware')
+const logger = require('../utils/logger')
 
 
 
@@ -17,31 +19,61 @@ usersRouter.get('/me', middleware.userExtractor, async(request, response) => {
 
 })
 
-usersRouter.post('/me/points', middleware.userExtractor, async(request, response) => {
+usersRouter.post('/me/points', middleware.userExtractor, async(request, response, next) => {
     try {
         const user = await User.findById(request.user)
         if (!user) {
             response.status(401).json({ error: 'user not found in DB' })
         }
 
-        const userId = user.id.toString()
-            //console.log(JSON.parse(request.body))
-
         if (request.user) {
-            const res = await User.findByIdAndUpdate(request.user, { $push: { points: request.body } }, { new: true })
+
+            user.points.push(request.body)
+            const res = await user.save()
             response.status(200).json(res)
+
         } else {
             response.status(401).json({ error: 'invalid user' })
         }
 
     } catch (error) {
-        console.log(error)
+        logger.error(error)
+        next(error)
+
     }
 
 
 })
 
-usersRouter.patch('/me', middleware.userExtractor, async(request, response) => {
+usersRouter.delete('/me/points/:id', middleware.userExtractor, async(request, response, next) => {
+
+    try {
+        const user = await User.findById(request.user)
+        if (!user) {
+            response.status(401).json({ error: 'user not found in DB' })
+        }
+
+        if (request.user) {
+
+            user.points.id(request.params.id).remove()
+            const res = await user.save()
+            response.status(204).json(res)
+
+        } else {
+            response.status(401).json({ error: 'invalid user' })
+        }
+
+    } catch (error) {
+        logger.error(error)
+        response.status({ error: 'undefined error', data: error })
+        next(error)
+
+    }
+
+
+})
+
+usersRouter.patch('/me', middleware.userExtractor, async(request, response, next) => {
     try {
         const user = await User.findById(request.user)
         if (!user) {
@@ -59,11 +91,11 @@ usersRouter.patch('/me', middleware.userExtractor, async(request, response) => {
         }
 
     } catch (error) {
-        console.log(error)
+        logger.error(error)
+        response.status(400).json({ error: error })
+
     }
 
-
-    //response.json(request.user)
 })
 
 usersRouter.get('/', async(request, response) => {
